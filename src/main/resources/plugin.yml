@@ -22,6 +22,14 @@ commands:
     description: allows user to toggle fly particles
     permission: hj320.particles
     permission-message: You don't have permission for this command
+  reqToFlyTimeOnServer:
+    description: Displays user time on server
+    permission: hj320.timeOnServer
+    permission-message: You don't have permission for this command
+  timeOnServer:
+    description: Displays user time on server
+    permission: hj320.timeOnServer
+    permission-message: You don't have permission for this command
 
 
 permissions:
@@ -35,3 +43,5 @@ hj320.fly.*:
       description: Gives access to fly
     hj320.flyparticles:
       description: toggle fly particles
+    hj320.timeOnServer:
+      description: Gives access to show amount of time since joining server.

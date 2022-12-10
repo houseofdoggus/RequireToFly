@@ -18,21 +18,22 @@ public class fly_system implements Listener {
     public fly_system(HJ320 hj320) {
         hj320.getCommand("fly").setExecutor(new toggles());
         hj320.getCommand("flyparticles").setExecutor(new toggles());
+        hj320.getCommand("timeOnServer").setExecutor(new toggles());
 
-        Bukkit.getScheduler().runTaskTimer(hj320.getInstance(), new Runnable() { //run loop
+        Bukkit.getScheduler().runTaskTimer(HJ320.getInstance(), new Runnable() { //run loop
             @Override
             public void run() {
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                if(player.isOnline() == true){
+                    if(player.isOnline()){
                         String mode = player.getGameMode().toString();
                         if (mode == "CREATIVE" || mode == "SPECTATOR") {player.setAllowFlight(true);} else {
-                            if(isplayerinflyon(player) == true && player.hasPermission("hj320.fly")||isplayerinflyon(player) == true && player.hasPermission("hj320.fly.req")){
+                            if(isplayerinflyon(player) && player.hasPermission("hj320.fly")|| isplayerinflyon(player) && player.hasPermission("hj320.fly.req")){
                                 if(getplayershours(player) == null)return;
                                 if(geconfigram() == null)return;
                                 if (Integer.parseInt(getplayershours(player))  <= Integer.parseInt(geconfigram())) {player.setAllowFlight(false);} else {
                                         if (Integer.parseInt(getplayershours(player)) >= Integer.parseInt(geconfigram())) {player.setAllowFlight(true);}
                                         if (player.isFlying()|| player.isGliding()) {
-                                        if(isplayerinparton(player) == true && player.hasPermission("hj320.particles")){
+                                        if(isplayerinparton(player) && player.hasPermission("hj320.particles")){
                                             player.getWorld().spawnParticle(Particle.SPIT, player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), 4, 0, 0, 0, 0);
                                         }
                                     }
@@ -44,11 +45,11 @@ public class fly_system implements Listener {
             }
         }, 1L, 1L);
 
-        Bukkit.getScheduler().runTaskTimer(hj320.getInstance(), new Runnable() { //run loop
+        Bukkit.getScheduler().runTaskTimer(HJ320.getInstance(), new Runnable() { //run loop
             @Override
             public void run() {
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                    if(player.isOnline() == true){
+                    if(player.isOnline()){
                         int up5 = Integer.parseInt(storeplayerhours.get(player.getUniqueId()))+5;
 
 //                        System.out.println("player = "+player.getName());
@@ -70,13 +71,11 @@ public class fly_system implements Listener {
 
     public static boolean isplayerinflyon(Player p) {
         if(isflyshitoncache.get(p.getUniqueId()) == null)return false;
-        if(isflyshitoncache.get(p.getUniqueId()).equals("1"))return true;
-        return false;
+        return isflyshitoncache.get(p.getUniqueId()).equals("1");
     }
     public static boolean isplayerinparton(Player p) {
         if(isparticlesshitoncache.get(p.getUniqueId()) == null)return false;
-        if(isparticlesshitoncache.get(p.getUniqueId()).equals("1"))return true;
-        return false;
+        return isparticlesshitoncache.get(p.getUniqueId()).equals("1");
     }
     public static String geconfigram() {
         if(getconfigloadinram.get("hj320hourconfig") == null)return "0";
